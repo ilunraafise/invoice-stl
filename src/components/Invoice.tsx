@@ -79,7 +79,7 @@ export function Invoice() {
       </div>
 
       {/* Invoice Container */}
-      <div className="invoice-container max-w-4xl mx-auto p-10 rounded-lg bg-card">
+      <div className="invoice-container max-w-4xl mx-auto pt-0 px-10 pb-10 rounded-lg bg-card">
         <InvoiceHeader 
           invoiceNumber={invoiceNumber}
           onInvoiceNumberChange={setInvoiceNumber}
