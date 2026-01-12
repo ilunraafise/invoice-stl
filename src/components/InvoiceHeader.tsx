@@ -18,7 +18,6 @@ export function InvoiceHeader({ invoiceNumber, onInvoiceNumberChange }: InvoiceH
         <h2 className="text-4xl font-extrabold text-gray-300 tracking-wider leading-none">
           INVOICE
         </h2>
-
         <input
           type="text"
           value={invoiceNumber}
