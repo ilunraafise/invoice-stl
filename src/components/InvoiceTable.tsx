@@ -29,7 +29,7 @@ export function InvoiceTable({ items, onItemChange, onAddItem, onRemoveItem }: I
         <thead>
           <tr className="bg-[#e8ecf2] font-semibold">
             <th className="border p-2 w-10 text-center">No.</th>
-            <th className="border p-2 text-left">Uraian</th>
+            <th className="border p-2 text-center">Uraian</th>
             <th className="border p-2 w-32 text-center">Satuan</th>
             <th className="border p-2 w-32 text-center">Harga</th>
             <th className="border w-10 no-print"></th>
@@ -108,22 +108,29 @@ export function InvoiceTable({ items, onItemChange, onAddItem, onRemoveItem }: I
 
 
               {/* SATUAN */}
-              <td className="border p-2 text-right">
-                <input
-                  className="input-invoice w-full text-right"
-                  value={item.satuan ? formatRupiah(item.satuan) : ""}
-                  onChange={(e) => {
-                    const number = parseInt(e.target.value.replace(/[^\d]/g, "")) || 0;
-                    onItemChange(item.id, "satuan", number);
-                    onItemChange(item.id, "harga", number);
-                  }}
-                />
+              <td className="border p-1 align-middle">
+                <div className="flex items-center justify-center h-full">
+                  <input
+                    className="input-invoice w-full text-center"
+                    value={item.satuan ? formatRupiah(item.satuan) : ""}
+                    onChange={(e) => {
+                      const number =
+                        parseInt(e.target.value.replace(/[^\d]/g, "")) || 0;
+                      onItemChange(item.id, "satuan", number);
+                      onItemChange(item.id, "harga", number);
+                    }}
+                  />
+                </div>
               </td>
 
-              {/* HARGA */}
-              <td className="border p-2 text-right font-semibold">
-                {formatRupiah(item.harga)}
+              <td className="border p-1 align-middle">
+                <div className="flex items-center justify-center h-full">
+                  <div className="input-invoice w-full text-center pointer-events-none">
+                    {formatRupiah(item.harga)}
+                  </div>
+                </div>
               </td>
+
 
               <td className="border p-2 text-center no-print">
                 <button
@@ -153,14 +160,15 @@ export function InvoiceTable({ items, onItemChange, onAddItem, onRemoveItem }: I
 
           {/* TOTAL */}
           <tr>
-            <td colSpan={2} className="border p-2 text-right font-bold bg-[#e8ecf2]">
-              Total
+            <td colSpan={3}></td> {/* kosong supaya total tepat di bawah kolom Harga */}
+            <td className="border p-1">
+              <div className="w-full h-full flex justify-center items-center font-bold text-[12px] leading-[11px]">
+                {formatRupiah(total)}
+              </div>
             </td>
-            <td className="border p-2 text-right font-bold bg-[#e8ecf2]">
-              {formatRupiah(total)}
-            </td>
-            <td className="border bg-[#e8ecf2]"></td>
+            <td></td>
           </tr>
+
         </tfoot>
       </table>
 

@@ -14,17 +14,30 @@ export function InvoiceHeader({ invoiceNumber, onInvoiceNumberChange }: InvoiceH
       />
 
       {/* Invoice Number */}
-      <div className="flex items-center gap-3 mt-1 mb-2">
-        <h2 className="text-4xl font-extrabold text-gray-300 tracking-wider leading-none">
+      <div className="flex items-baseline gap-3 mt-1 mb-2">
+        <h2 className="text-[40px] font-bold text-gray-300 tracking-wider leading-none">
           INVOICE
         </h2>
+
         <input
           type="text"
           value={invoiceNumber}
           onChange={(e) => onInvoiceNumberChange(e.target.value)}
-          className="text-base font-semibold text-primary border-b-2 border-dashed outline-none bg-transparent py-0 px-2 w-56 leading-none"
+          className="
+      bg-transparent
+      text-base
+      font-semibold
+      text-black
+      italic
+      outline-none
+      border-none
+      p-0
+      w-56
+      leading-none
+    "
         />
       </div>
+
     </div>
   );
 }

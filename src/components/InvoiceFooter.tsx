@@ -9,42 +9,45 @@ interface InvoiceFooterProps {
 
 export function InvoiceFooter({
   city,
-  date,
   signerName,
   onCityChange,
   onDateChange,
   onSignerNameChange,
 }: InvoiceFooterProps) {
   return (
-    <div className="flex justify-end">
+    <div className="flex justify-end mt-40 print:mt-40"> {/* Tambah margin-top besar */}
       <div className="text-center">
-        <div className="flex items-center gap-2 mb-8">
+        {/* Baris tanggal */}
+        <div className="flex justify-center gap-2 mb-2">
           <input
             type="text"
             value={city}
             onChange={(e) => onCityChange(e.target.value)}
-            placeholder="Depok"
-            className="border-b border-dashed border-muted focus:border-primary outline-none bg-transparent py-1 text-sm w-20 text-center print:border-transparent"
+            placeholder="Depok,"
+            className="bg-transparent py-1 px-2 text-sm text-center w-20 text-black outline-none"
           />
-          <span>,</span>
           <input
             type="text"
-            value={date}
             onChange={(e) => onDateChange(e.target.value)}
-            placeholder="02 Januari 2026"
-            className="border-b border-dashed border-muted focus:border-primary outline-none bg-transparent py-1 text-sm w-36 text-center print:border-transparent"
+            placeholder="Januari 2026"
+            className="bg-transparent py-1 px-2 text-sm text-center w-36 text-black outline-none"
           />
         </div>
-        <p className="text-sm text-muted-foreground mb-16">Hormat kami,</p>
-        <div className="border-b-2 border-foreground w-40 mx-auto"></div>
+
+        {/* Hormat kami */}
+        <p className="text-sm font-normal mb-20 text-black">Hormat kami,</p>
+
+        {/* Nama penanda tangan */}
         <input
           type="text"
           value={signerName}
           onChange={(e) => onSignerNameChange(e.target.value)}
           placeholder="SRIYATUN"
-          className="mt-2 border-b border-dashed border-muted focus:border-primary outline-none bg-transparent py-1 text-sm font-bold text-center w-40 print:border-transparent"
+          className="bg-transparent py-1 text-sm font-bold text-center w-40 text-black outline-none"
         />
       </div>
     </div>
   );
 }
+
+

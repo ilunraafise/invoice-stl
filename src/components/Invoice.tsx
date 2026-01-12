@@ -13,7 +13,7 @@ function generateId(): string {
 export function Invoice() {
   const [invoiceNumber, setInvoiceNumber] = useState('027/STL/I/2026');
   const [recipientName, setRecipientName] = useState('PT DUNIA TRANS LOGISTIK');
-  const [city, setCity] = useState('Depok');
+  const [city, setCity] = useState('Depok,');
   const [date, setDate] = useState('02 Januari 2026');
   const [signerName, setSignerName] = useState('SRIYATUN');
 
