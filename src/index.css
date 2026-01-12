@@ -83,35 +83,51 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Arial", serif !important;
   }
 }
 
 /* Print styles */
 @media print {
+  .invoice-header-full {
+    margin-top: -25mm !important;   /* 🔥 KUNCI */
+  }
+
+  .invoice-header-image {
+    margin-top: -12mm !important;   /* 🔥 KUNCI UTAMA */
+    padding-left: 2.5mm !important;
+    padding-right: 2.5mm !important;
+  }
+
+  #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    text-align: left !important;
+  }
+  
   body {
     background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  
+
   .no-print {
     display: none !important;
   }
-  
+
   .invoice-container {
-    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 20mm !important;
-    width: 210mm !important;
-    min-height: 297mm !important;
+    padding: 12mm 15mm 20mm 15mm !important;
   }
-  
+
   @page {
     size: A4;
     margin: 0;
   }
 }
+
 
 /* Invoice styling */
 .invoice-container {
@@ -123,4 +139,41 @@
 
 .font-display {
   font-family: 'Playfair Display', serif;
+}
+
+.input-invoice {
+  @apply
+    px-1
+    py-[1px]
+    border
+    border-dashed
+    border-muted
+    rounded-[2px]
+    text-[10px]
+    leading-[10px]
+    bg-transparent
+    focus:border-primary
+    outline-none
+    print:border-transparent;
+}
+
+/* ============================= */
+/* INVOICE TABLE FONT SETTINGS */
+/* ============================= */
+.invoice-table {
+  font-size: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.invoice-table th,
+/* Biar baris uraiannya padat */
+.invoice-table td {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  line-height: 11px;
+}
+.invoice-table input,
+.invoice-table span {
+  font-size: 10px;
+  font-family: Arial, sans-serif;
 }

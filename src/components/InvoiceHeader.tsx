@@ -29,3 +29,4 @@ export function InvoiceHeader({ invoiceNumber, onInvoiceNumberChange }: InvoiceH
     </div>
   );
 }
+

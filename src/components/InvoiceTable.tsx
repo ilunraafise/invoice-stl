@@ -7,7 +7,8 @@ export interface InvoiceItem {
   gudang: string;
   ptTujuan: string;
   suratJalan: string;
-  harga: number;
+  satuan: number;   // harga satuan
+  harga: number;    // total = satuan * qty
 }
 
 interface InvoiceTableProps {
@@ -22,72 +23,112 @@ export function InvoiceTable({ items, onItemChange, onAddItem, onRemoveItem }: I
 
   return (
     <div className="mb-6">
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse text-[13px]">
+
+        {/* HEADER */}
         <thead>
-          <tr className="bg-primary text-primary-foreground">
-            <th className="border border-primary p-3 text-center w-12 text-sm font-semibold">No.</th>
-            <th className="border border-primary p-3 text-left text-sm font-semibold">Uraian</th>
-            <th className="border border-primary p-3 text-right w-40 text-sm font-semibold">Harga</th>
-            <th className="border border-primary p-3 w-12 no-print"></th>
+          <tr className="bg-[#e8ecf2] font-semibold">
+            <th className="border p-2 w-10 text-center">No.</th>
+            <th className="border p-2 text-left">Uraian</th>
+            <th className="border p-2 w-32 text-center">Satuan</th>
+            <th className="border p-2 w-32 text-center">Harga</th>
+            <th className="border w-10 no-print"></th>
           </tr>
         </thead>
+
+        {/* BODY */}
         <tbody>
           {items.map((item, index) => (
-            <tr key={item.id} className={index % 2 === 1 ? 'bg-muted/30' : 'bg-card'}>
-              <td className="border border-border p-3 text-center font-medium">{index + 1}</td>
-              <td className="border border-border p-2">
-                <div className="flex flex-wrap gap-2 items-center">
+            <tr key={item.id}>
+              <td className="border p-2 text-center">{index + 1}</td>
+
+              {/* URAIAN */}
+              {/* URAIAN */}
+              <td className="border p-1 align-top">
+                <div className="leading-[11px] flex flex-col gap-[1px]">
+
+                  {/* BARIS 1 — PLAT */}
                   <input
-                    type="text"
+                    className="input-invoice w-24"
                     value={item.platNumber}
-                    onChange={(e) => onItemChange(item.id, 'platNumber', e.target.value)}
-                    placeholder="B 9576 UXS"
-                    className="px-2 py-1 border border-dashed border-muted rounded text-sm bg-transparent focus:border-primary outline-none w-28 print:border-transparent"
+                    onChange={(e) =>
+                      onItemChange(item.id, "platNumber", e.target.value)
+                    }
                   />
-                  <span className="text-muted-foreground">GD</span>
-                  <input
-                    type="text"
-                    value={item.gudang}
-                    onChange={(e) => onItemChange(item.id, 'gudang', e.target.value)}
-                    placeholder="WIRA"
-                    className="px-2 py-1 border border-dashed border-muted rounded text-sm bg-transparent focus:border-primary outline-none w-24 print:border-transparent"
-                  />
-                  <span className="text-muted-foreground">–</span>
-                  <input
-                    type="text"
-                    value={item.ptTujuan}
-                    onChange={(e) => onItemChange(item.id, 'ptTujuan', e.target.value)}
-                    placeholder="PT DAEDONG INTERNATIONAL"
-                    className="px-2 py-1 border border-dashed border-muted rounded text-sm bg-transparent focus:border-primary outline-none flex-1 min-w-32 print:border-transparent"
-                  />
-                  <span className="text-muted-foreground">(</span>
-                  <input
-                    type="text"
-                    value={item.suratJalan}
-                    onChange={(e) => onItemChange(item.id, 'suratJalan', e.target.value)}
-                    placeholder="SI2512.0074"
-                    className="px-2 py-1 border border-dashed border-muted rounded text-sm bg-transparent focus:border-primary outline-none w-28 print:border-transparent"
-                  />
-                  <span className="text-muted-foreground">)</span>
+
+                  {/* BARIS 2 — GD + PT */}
+                  <div className="flex items-center gap-[2px]">
+                    <input
+                      className="input-invoice flex-grow min-w-[28px] max-w-[80px]"
+                      value={item.gudang}
+                      onChange={(e) => {
+                        let val = e.target.value;
+
+                        // pastikan selalu diawali "GD "
+                        if (!val.startsWith("GD ")) {
+                          val = "GD " + val.replace(/^GD\s*/i, "");
+                        }
+
+                        onItemChange(item.id, "gudang", val);
+                      }}
+                    />
+
+                    <span className="text-[10px] leading-[11px]">–</span>
+                    <input
+                      className="input-invoice flex-1"
+                      value={item.ptTujuan}
+                      onChange={(e) =>
+                        onItemChange(item.id, "ptTujuan", e.target.value)
+                      }
+                    />
+                  </div>
+
+                  {/* BARIS 3 — SURAT JALAN */}
+                  <div className="flex items-center gap-[1px]">
+                    <input
+                      className="input-invoice w-350"
+                      value={item.suratJalan}
+                      onChange={(e) => {
+                        let val = e.target.value;
+
+                        // buang tanda kurung jika user ngetik manual
+                        val = val.replace(/[()]/g, "");
+
+                        // bungkus ulang
+                        val = val ? `(${val})` : "";
+
+                        onItemChange(item.id, "suratJalan", val);
+                      }}
+                    />
+
+                  </div>
+
                 </div>
               </td>
-              <td className="border border-border p-2 text-right">
+
+
+              {/* SATUAN */}
+              <td className="border p-2 text-right">
                 <input
-                  type="text"
-                  value={item.harga ? formatRupiah(item.harga) : ''}
+                  className="input-invoice w-full text-right"
+                  value={item.satuan ? formatRupiah(item.satuan) : ""}
                   onChange={(e) => {
-                    const numericValue = parseInt(e.target.value.replace(/[^\d]/g, ''), 10) || 0;
-                    onItemChange(item.id, 'harga', numericValue);
+                    const number = parseInt(e.target.value.replace(/[^\d]/g, "")) || 0;
+                    onItemChange(item.id, "satuan", number);
+                    onItemChange(item.id, "harga", number);
                   }}
-                  placeholder="Rp 0"
-                  className="px-2 py-1 border border-dashed border-muted rounded text-sm bg-transparent focus:border-primary outline-none w-full text-right font-medium print:border-transparent"
                 />
               </td>
-              <td className="border border-border p-2 no-print">
+
+              {/* HARGA */}
+              <td className="border p-2 text-right font-semibold">
+                {formatRupiah(item.harga)}
+              </td>
+
+              <td className="border p-2 text-center no-print">
                 <button
                   onClick={() => onRemoveItem(item.id)}
-                  className="p-1 text-destructive hover:bg-destructive/10 rounded transition-colors"
-                  title="Hapus baris"
+                  className="p-1 text-destructive hover:bg-destructive/10 rounded"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -95,25 +136,34 @@ export function InvoiceTable({ items, onItemChange, onAddItem, onRemoveItem }: I
             </tr>
           ))}
         </tbody>
+
+        {/* FOOTER */}
         <tfoot>
           <tr>
             <td colSpan={4} className="p-2 no-print">
               <button
                 onClick={onAddItem}
-                className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 font-medium transition-colors"
+                className="flex items-center gap-2 text-sm text-primary hover:text-primary/80"
               >
                 <Plus className="w-4 h-4" />
                 Tambah Baris
               </button>
             </td>
           </tr>
-          <tr className="bg-primary text-primary-foreground font-bold">
-            <td colSpan={2} className="border border-primary p-3 text-right text-sm">Total:</td>
-            <td className="border border-primary p-3 text-right text-lg">{formatRupiah(total)}</td>
-            <td className="border border-primary no-print"></td>
+
+          {/* TOTAL */}
+          <tr>
+            <td colSpan={2} className="border p-2 text-right font-bold bg-[#e8ecf2]">
+              Total
+            </td>
+            <td className="border p-2 text-right font-bold bg-[#e8ecf2]">
+              {formatRupiah(total)}
+            </td>
+            <td className="border bg-[#e8ecf2]"></td>
           </tr>
         </tfoot>
       </table>
+
     </div>
   );
 }

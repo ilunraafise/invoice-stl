@@ -16,42 +16,50 @@ export function Invoice() {
   const [city, setCity] = useState('Depok');
   const [date, setDate] = useState('02 Januari 2026');
   const [signerName, setSignerName] = useState('SRIYATUN');
-  
+
   const [items, setItems] = useState<InvoiceItem[]>([
     {
       id: generateId(),
       platNumber: 'B 9576 UXS',
-      gudang: 'WIRA',
+      gudang: 'GD WIRA',
       ptTujuan: 'PT DAEDONG INTERNATIONAL',
-      suratJalan: 'SI2512.0074',
+      suratJalan: '(SI2512.0074)',
+      satuan: 1250000,
       harga: 1250000,
     },
     {
       id: generateId(),
       platNumber: 'F 8790 KQ',
-      gudang: 'PESAKA',
-      ptTujuan: 'PT LESTARI BUSANA ANGGUN',
-      suratJalan: 'SI2512.0062',
-      harga: 950000,
+      gudang: 'GD PESAKA',
+      ptTujuan: 'PT DAEDONG INTERNATIONAL',
+      suratJalan: '(SI2512.0075)',
+      satuan: 1250000,
+      harga: 1250000,
     },
+
   ]);
 
   const handleItemChange = (id: string, field: keyof InvoiceItem, value: string | number) => {
-    setItems(prev => prev.map(item => 
+    setItems(prev => prev.map(item =>
       item.id === id ? { ...item, [field]: value } : item
     ));
   };
 
   const handleAddItem = () => {
-    setItems(prev => [...prev, {
-      id: generateId(),
-      platNumber: '',
-      gudang: '',
-      ptTujuan: '',
-      suratJalan: '',
-      harga: 0,
-    }]);
+    setItems(prev => [
+      ...prev,
+      {
+        id: generateId(),
+        platNumber: '',
+        gudang: 'GD ',
+        ptTujuan: 'PT',
+        suratJalan: '(SI)',
+        satuan: 0,
+        harga: 0,
+      },
+    ]);
   };
+
 
   const handleRemoveItem = (id: string) => {
     if (items.length > 1) {
@@ -66,7 +74,7 @@ export function Invoice() {
   const total = items.reduce((sum, item) => sum + item.harga, 0);
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
+    <div className="min-h-screen bg-background py-8 px-4 print:p-0">
       {/* Print Button */}
       <div className="max-w-4xl mx-auto mb-4 no-print">
         <button
@@ -84,21 +92,21 @@ export function Invoice() {
           invoiceNumber={invoiceNumber}
           onInvoiceNumberChange={setInvoiceNumber}
         />
-        
-        <RecipientInfo 
+
+        <RecipientInfo
           recipientName={recipientName}
           onRecipientNameChange={setRecipientName}
         />
-        
+
         <InvoiceTable
           items={items}
           onItemChange={handleItemChange}
           onAddItem={handleAddItem}
           onRemoveItem={handleRemoveItem}
         />
-        
+
         <TerbilangSection total={total} />
-        
+
         <InvoiceFooter
           city={city}
           date={date}
