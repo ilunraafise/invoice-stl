@@ -5,7 +5,7 @@ interface InvoiceHeaderProps {
 
 export function InvoiceHeader({ invoiceNumber, onInvoiceNumberChange }: InvoiceHeaderProps) {
   return (
-    <div className="border-b-4 border-primary m-0 p-0">
+    <div className=" border-primary m-0 p-0">
       {/* Header Image */}
       <img
         src="/header-invoice.png"

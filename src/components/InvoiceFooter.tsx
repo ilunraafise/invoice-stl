@@ -15,7 +15,7 @@ export function InvoiceFooter({
   onSignerNameChange,
 }: InvoiceFooterProps) {
   return (
-    <div className="flex justify-end mt-40 print:mt-40"> {/* Tambah margin-top besar */}
+    <div className="flex justify-end mt-20 print:mt-20"> {/* Tambah margin-top besar */}
       <div className="text-center">
         {/* Baris tanggal */}
         <div className="flex justify-center gap-2 mb-2">

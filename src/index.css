@@ -142,20 +142,18 @@
 }
 
 .input-invoice {
-  @apply
-    px-1
-    py-[1px]
-    border
-    border-dashed
-    border-muted
-    rounded-[2px]
-    text-[10px]
-    leading-[10px]
-    bg-transparent
-    focus:border-primary
-    outline-none
-    print:border-transparent;
+  padding: 0 2px !important;
+  font-size: 10px !important;
+  line-height: 10px !important;
+  height: 14px !important;
+
+  background: transparent !important;
+  border: none !important;
+
+  outline: none !important;
+  box-shadow: none !important;
 }
+
 
 /* ============================= */
 /* INVOICE TABLE FONT SETTINGS */
