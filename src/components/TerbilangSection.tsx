@@ -6,7 +6,7 @@ interface TerbilangSectionProps {
 
 export function TerbilangSection({ total }: TerbilangSectionProps) {
   return (
-    <div className="mb-8 text-left">   {/* memastikan semua konten rata kiri */}
+    <div className="mb-8 text-left">
       <div
         className="inline-block px-4 py-2 rounded border border-border"
         style={{
@@ -33,7 +33,17 @@ export function TerbilangSection({ total }: TerbilangSectionProps) {
           </span>
         </p>
       </div>
-    </div>
 
+      {/* Tambahan tulisan di bawah */}
+      <p
+        className="mt-3"
+        style={{
+          fontFamily: "Calibri, Arial",
+          fontSize: "14px",
+        }}
+      >
+        Transfer ke Rek BNI 1234567890 a.n. PT XXXXX
+      </p>
+    </div>
   );
 }
