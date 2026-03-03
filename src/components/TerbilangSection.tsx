@@ -42,7 +42,7 @@ export function TerbilangSection({ total }: TerbilangSectionProps) {
           fontSize: "14px",
         }}
       >
-        Transfer ke Rek BNI 1234567890 a.n. PT XXXXX
+        Transfer ke Rek BNI 2034156794 a.n. Sriyatun
       </p>
     </div>
   );
